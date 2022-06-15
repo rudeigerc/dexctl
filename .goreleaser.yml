@@ -1,0 +1,45 @@
+before:
+  hooks:
+    - go mod download
+builds:
+  - env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+    id: dexctl
+    main: ./cmd/dexctl
+    binary: dexctl
+archives:
+  - id: binary
+    format: binary
+    format_overrides:
+      - goos: darwin
+        format: tar.gz
+    name_template: "dexctl-{{ .Version }}-{{ .Os }}-{{ .Arch }}"
+    replacements:
+      386: i386
+      amd64: x86_64
+    files:
+      - none*
+checksum:
+  name_template: 'checksums.txt'
+snapshot:
+  name_template: "{{ .Tag }}-next"
+changelog:
+  sort: asc
+  filters:
+    exclude:
+    - '^docs:'
+    - '^test:'
+brews:
+  -
+    tap:
+      owner: rudeigerc
+      name: homebrew-tap
+    commit_author:
+      name: Yuchen Cheng
+      email: rudeigerc@gmail.com
+    folder: Formula
+    homepage: https://github.com/rudeigerc/dexctl
+    description: A command line tool for Dex IdP gRPC interface
