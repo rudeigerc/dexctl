@@ -49,7 +49,7 @@ func NewVersionCommand() *cli.Command {
 
 func versionAction(c *cli.Context) error {
 	fmt.Println("Client Version:")
-	fmt.Printf("dexctl %s\n", gitVersion)
+	fmt.Printf("dexctl %s commit: %s\n", gitVersion, gitCommit)
 
 	if !c.Bool("client") {
 		client, conn, err := client.NewDexClient(true)
