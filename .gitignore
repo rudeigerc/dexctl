@@ -25,3 +25,6 @@ testbin/*
 *~
 
 .vscode/
+
+# goreleaser
+dist/
