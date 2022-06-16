@@ -22,23 +22,36 @@ import (
 
 	"github.com/urfave/cli/v2"
 
+	"github.com/rudeigerc/dexctl/pkg/cmd/create"
 	"github.com/rudeigerc/dexctl/pkg/cmd/version"
 )
 
 func main() {
-	app := &cli.App{
-		Name:  "dexctl",
-		Usage: "A command line tool for Dex IdP gRPC interface",
-		Flags: []cli.Flag{
-			&cli.BoolFlag{
-				Name:  "insercure",
-				Value: true,
-				Usage: "Disable server certificate verification",
-			},
+	app := cli.NewApp()
+
+	app.Name = "dexctl"
+	app.Usage = "A command line tool for Dex IdP gRPC interface"
+	app.EnableBashCompletion = true
+	app.Flags = []cli.Flag{
+		&cli.BoolFlag{
+			Name:  "insercure",
+			Value: false,
+			Usage: "Disable server certificate verification",
 		},
-		Commands: []*cli.Command{
-			version.NewVersionCommand(),
+		&cli.StringFlag{
+			Name:  "host",
+			Value: "0.0.0.0",
+			Usage: "",
 		},
+		&cli.IntFlag{
+			Name:  "port",
+			Value: 5557,
+			Usage: "",
+		},
+	}
+	app.Commands = []*cli.Command{
+		version.NewVersionCommand(),
+		create.NewCreateCommand(),
 	}
 
 	err := app.Run(os.Args)
