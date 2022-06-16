@@ -3,7 +3,6 @@ Copyright 2022 Yuchen Cheng.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
 
     http://www.apache.org/licenses/LICENSE-2.0
 
@@ -26,31 +25,47 @@ import (
 	pb "github.com/rudeigerc/dexctl/pkg/protos"
 )
 
+var (
+	gitVersion = "0.0.0"
+	buildDate  = "1970-01-01T00:00:00Z"
+	gitCommit  = ""
+)
+
 func NewVersionCommand() *cli.Command {
 	return &cli.Command{
 		Name:    "version",
 		Aliases: []string{"v"},
 		Usage:   "Print version information",
-		Action:  versionAction,
+		Flags: []cli.Flag{
+			&cli.BoolFlag{
+				Name:  "client",
+				Value: false,
+				Usage: "If true, shows client version only",
+			},
+		},
+		Action: versionAction,
 	}
 }
 
 func versionAction(c *cli.Context) error {
-	client, conn, err := client.NewDexClient(true)
-	if err != nil {
-		return err
-	}
-	defer conn.Close()
-
-	resp, err := client.GetVersion(context.Background(), &pb.VersionReq{})
-	if err != nil {
-		return err
-	}
-
 	fmt.Println("Client Version:")
-	fmt.Println("dexctl v0.0.1")
-	fmt.Println()
-	fmt.Println("Server Version:")
-	fmt.Printf("API: %d, Server: %s\n", resp.Api, resp.Server)
+	fmt.Printf("dexctl %s\n", gitVersion)
+
+	if !c.Bool("client") {
+		client, conn, err := client.NewDexClient(true)
+		if err != nil {
+			return err
+		}
+		defer conn.Close()
+
+		resp, err := client.GetVersion(context.Background(), &pb.VersionReq{})
+		if err != nil {
+			return err
+		}
+		fmt.Println()
+		fmt.Println("Server Version:")
+		fmt.Printf("API: %d, Server: %s\n", resp.Api, resp.Server)
+	}
+
 	return nil
 }

@@ -1,3 +1,13 @@
+
+VERSION ?= $(shell git describe --tags --abbrev=0)
+SHA1 ?= $(shell git rev-parse HEAD)
+BUILD = $(shell date +%FT%T%z)
+
+LDFLAGS=-ldflags \
+	'-X github.com/rudeigerc/dexctl/pkg/cmd/version.gitVersion=$(VERSION) \
+	-X github.com/rudeigerc/dexctl/pkg/cmd/version.gitCommit=$(SHA1) \
+	-X github.com/rudeigerc/dexctl/pkg/cmd/version.buildDate=$(BUILD)'
+
 .PHONY: all
 all: build
 
@@ -21,7 +31,7 @@ vet: ## Run go vet against code.
 
 .PHONY: build
 build: generate fmt vet ## Build manager binary.
-	go build -o bin/dexctl cmd/dexctl/main.go
+	go build ${LDFLAGS} -o bin/dexctl cmd/dexctl/main.go
 
 .PHONY: clean
 clean:
