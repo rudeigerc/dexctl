@@ -51,21 +51,23 @@ func versionAction(c *cli.Context) error {
 	fmt.Println("Client Version:")
 	fmt.Printf("dexctl %s commit: %s\n", gitVersion, gitCommit)
 
-	if !c.Bool("client") {
-		client, conn, err := client.NewDexClient(true)
-		if err != nil {
-			return err
-		}
-		defer conn.Close()
-
-		resp, err := client.GetVersion(context.Background(), &pb.VersionReq{})
-		if err != nil {
-			return err
-		}
-		fmt.Println()
-		fmt.Println("Server Version:")
-		fmt.Printf("API: %d, Server: %s\n", resp.Api, resp.Server)
+	if c.Bool("client") {
+		return nil
 	}
+
+	client, conn, err := client.NewDexClient(true)
+	if err != nil {
+		return err
+	}
+	defer conn.Close()
+
+	resp, err := client.GetVersion(context.Background(), &pb.VersionReq{})
+	if err != nil {
+		return err
+	}
+	fmt.Println()
+	fmt.Println("Server Version:")
+	fmt.Printf("API: %d, Server: %s\n", resp.Api, resp.Server)
 
 	return nil
 }
