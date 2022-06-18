@@ -8,15 +8,15 @@ builds:
       - linux
       - darwin
     goarm:
-      - "7"
+      - '7'
     mod_timestamp: '{{ .CommitTimestamp }}'
     id: dexctl
     main: ./cmd/dexctl
     binary: dexctl
     ldflags:
       - -s -w
-      - -X github.com/rudeigerc/dexctl/pkg/cmd/version.gitVersion={{.Version}}
-      - -X github.com/rudeigerc/dexctl/pkg/cmd/version.gitCommit={{.Commit}}
+      - -X github.com/rudeigerc/dexctl/pkg/cmd/version.gitVersion={{ .Version }}
+      - -X github.com/rudeigerc/dexctl/pkg/cmd/version.gitCommit={{ .Commit }}
       - -X github.com/rudeigerc/dexctl/pkg/cmd/version.buildDate={{ .CommitDate }}
 archives:
   - id: dexctl
@@ -32,9 +32,9 @@ archives:
       - README.md
       - LICENSE
 checksum:
-  name_template: "checksums.txt"
+  name_template: 'checksums.txt'
 snapshot:
-  name_template: "{{ .Tag }}-next"
+  name_template: '{{ .Tag }}-next'
 changelog:
   sort: asc
   use: github
@@ -43,16 +43,20 @@ changelog:
     - '^docs:'
     - '^test:'
 brews:
-  - tap:
+  - name: dexctl
+    tap:
       owner: rudeigerc
       name: homebrew-tap
     commit_author:
       name: rudeigerc
       email: rudeigerc@gmail.com
     folder: Formula
-    goarm: "7"
+    goarm: '7'
     homepage: https://github.com/rudeigerc/dexctl
     description: A command line tool for Dex IdP gRPC interface
     license: Apache-2.0
+    dependencies:
+      - name: go
+        type: build
     test: |
       system "#{bin}/dexctl version --client"
