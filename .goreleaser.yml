@@ -43,7 +43,7 @@ changelog:
     - '^docs:'
     - '^test:'
 brews:
-  - name: dexctl
+  - name: dexctl@alpha
     tap:
       owner: rudeigerc
       name: homebrew-tap
