@@ -19,7 +19,7 @@ package client
 import (
 	"fmt"
 
-	pb "github.com/rudeigerc/dexctl/pkg/protos"
+	pb "github.com/dexidp/dex/api/v2"
 	"google.golang.org/grpc"
 )
 

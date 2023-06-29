@@ -26,7 +26,8 @@ import (
 	"golang.org/x/crypto/bcrypt"
 
 	"github.com/rudeigerc/dexctl/pkg/cmd/client"
-	pb "github.com/rudeigerc/dexctl/pkg/protos"
+
+	pb "github.com/dexidp/dex/api/v2"
 )
 
 func NewCreatePasswordCommand() *cli.Command {
