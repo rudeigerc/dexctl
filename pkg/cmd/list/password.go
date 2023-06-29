@@ -14,25 +14,43 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-package client
+package list
 
 import (
+	"context"
 	"fmt"
 
+	"github.com/urfave/cli/v2"
+
+	"github.com/rudeigerc/dexctl/pkg/cmd/client"
+
 	pb "github.com/dexidp/dex/api/v2"
-	"google.golang.org/grpc"
 )
 
-func NewDexClient(insecure bool) (pb.DexClient, *grpc.ClientConn, error) {
-	opts := []grpc.DialOption{}
-	if insecure {
-		opts = append(opts, grpc.WithInsecure())
+func NewListPasswordsCommand() *cli.Command {
+	return &cli.Command{
+		Name:   "passwords",
+		Usage:  "List password",
+		Action: listPasswordsAction,
 	}
+}
 
-	conn, err := grpc.Dial("127.0.0.1:5557", opts...)
+func listPasswordsAction(c *cli.Context) error {
+
+	client, conn, err := client.NewDexClient(true)
 	if err != nil {
-		return nil, nil, fmt.Errorf("fail to dial: %v", err)
+		return err
 	}
-	client := pb.NewDexClient(conn)
-	return client, conn, nil
+	defer conn.Close()
+
+	resp, err := client.ListPasswords(context.Background(),
+		&pb.ListPasswordReq{},
+	)
+	if err != nil {
+		return err
+	}
+	passwords := resp.GetPasswords()
+	fmt.Println(passwords)
+
+	return nil
 }

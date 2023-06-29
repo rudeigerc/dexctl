@@ -25,5 +25,8 @@ func NewListCommand() *cli.Command {
 		Name:    "list",
 		Aliases: []string{"l"},
 		Usage:   "Display resource information",
+		Subcommands: []*cli.Command{
+			NewListPasswordsCommand(),
+		},
 	}
 }

@@ -4,11 +4,11 @@ go 1.17
 
 require (
 	github.com/AlecAivazis/survey/v2 v2.3.5
+	github.com/dexidp/dex/api/v2 v2.1.0
 	github.com/google/uuid v1.1.2
 	github.com/urfave/cli/v2 v2.8.1
 	golang.org/x/crypto v0.0.0-20200622213623-75b288015ac9
 	google.golang.org/grpc v1.47.0
-	google.golang.org/protobuf v1.27.1
 )
 
 require (
@@ -20,9 +20,10 @@ require (
 	github.com/mgutz/ansi v0.0.0-20170206155736-9520e82c474b // indirect
 	github.com/russross/blackfriday/v2 v2.1.0 // indirect
 	github.com/xrash/smetrics v0.0.0-20201216005158-039620a65673 // indirect
-	golang.org/x/net v0.0.0-20201021035429-f5854403a974 // indirect
+	golang.org/x/net v0.0.0-20220127200216-cd36cc0744dd // indirect
 	golang.org/x/sys v0.0.0-20220422013727-9388b58f7150 // indirect
-	golang.org/x/term v0.0.0-20210503060354-a79de5458b56 // indirect
+	golang.org/x/term v0.0.0-20210927222741-03fcf44c2211 // indirect
 	golang.org/x/text v0.3.7 // indirect
-	google.golang.org/genproto v0.0.0-20200526211855-cb27e3aa2013 // indirect
+	google.golang.org/genproto v0.0.0-20220207185906-7721543eae58 // indirect
+	google.golang.org/protobuf v1.27.1 // indirect
 )

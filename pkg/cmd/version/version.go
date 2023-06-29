@@ -21,8 +21,8 @@ import (
 
 	"github.com/urfave/cli/v2"
 
+	pb "github.com/dexidp/dex/api/v2"
 	"github.com/rudeigerc/dexctl/pkg/cmd/client"
-	pb "github.com/rudeigerc/dexctl/pkg/protos"
 )
 
 var (
