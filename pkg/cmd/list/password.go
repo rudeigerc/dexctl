@@ -17,16 +17,40 @@ limitations under the License.
 package list
 
 import (
+	"context"
+	"fmt"
+
 	"github.com/urfave/cli/v2"
+
+	"github.com/rudeigerc/dexctl/pkg/cmd/client"
+
+	pb "github.com/dexidp/dex/api/v2"
 )
 
-func NewListCommand() *cli.Command {
+func NewListPasswordsCommand() *cli.Command {
 	return &cli.Command{
-		Name:    "list",
-		Aliases: []string{"l"},
-		Usage:   "Display resource information",
-		Subcommands: []*cli.Command{
-			NewListPasswordsCommand(),
-		},
+		Name:   "passwords",
+		Usage:  "List password",
+		Action: listPasswordsAction,
 	}
+}
+
+func listPasswordsAction(c *cli.Context) error {
+
+	client, conn, err := client.NewDexClient(true)
+	if err != nil {
+		return err
+	}
+	defer conn.Close()
+
+	resp, err := client.ListPasswords(context.Background(),
+		&pb.ListPasswordReq{},
+	)
+	if err != nil {
+		return err
+	}
+	passwords := resp.GetPasswords()
+	fmt.Println(passwords)
+
+	return nil
 }

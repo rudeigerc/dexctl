@@ -23,6 +23,7 @@ import (
 	"github.com/urfave/cli/v2"
 
 	"github.com/rudeigerc/dexctl/pkg/cmd/create"
+	"github.com/rudeigerc/dexctl/pkg/cmd/list"
 	"github.com/rudeigerc/dexctl/pkg/cmd/version"
 )
 
@@ -52,6 +53,7 @@ func main() {
 	app.Commands = []*cli.Command{
 		version.NewVersionCommand(),
 		create.NewCreateCommand(),
+		list.NewListCommand(),
 	}
 
 	err := app.Run(os.Args)
